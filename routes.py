@@ -8,7 +8,7 @@ def home():
 
 @app.route('/map')
 def themap():
-	return render_template('index.html')
+	return index.html
 
 
 	
