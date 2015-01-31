@@ -6,7 +6,9 @@ def home():
 	return render_template ('home.html')
 
 @app.route('/')
-def welcome():
-	return render_template('welcome.html')
+def themap():
+	return render_template('index.html')
+
+	
 if __name__ == '__main__':
     app.run()
