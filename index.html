@@ -1,34 +1,36 @@
 {% extends "template.html" %}
 {% block content %}
-<head>
-	<style type="text/css">
-		#map-canvas {height: 100%;margin: 0;padding: 0;}
-	</style>
-	<title></title>
-	<script type="text/javascript"
-      	src="https://maps.googleapis.com/maps/api/js?sensor=true">
-    </script>
-    
-    <script type="text/javascript">
-    	function initialize () {
-    		var mapOptions = {
-    	   		center: new google.maps.LatLng (29.7180,-95.4000)
-    	   		zoom: 8,
-    	   	};
-    	
-    		var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
-    	}
+<div>
+    <head>
+    	<style type="text/css">
+    		#map-canvas {height: 100%;margin: 0;padding: 0;}
+    	</style>
+    	<title></title>
+    	<script type="text/javascript"
+          	src="https://maps.googleapis.com/maps/api/js?sensor=true">
+        </script>
+        
+        <script type="text/javascript">
+        	function initialize () {
+        		var mapOptions = {
+        	   		center: new google.maps.LatLng (29.7180,-95.4000)
+        	   		zoom: 8,
+        	   	};
+        	
+        		var map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+        	}
 
-    	function loadScript() {
-    		var script = document.createElement('script');
-    		script.type = 'text/javascript';
-    		script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' + 'callback=initialize';
-    		document.body.appendChild(script);
-    	}
-    	
-    	window.onload =loadScript;
-    </script>
-</head>
+        	function loadScript() {
+        		var script = document.createElement('script');
+        		script.type = 'text/javascript';
+        		script.src = 'https://maps.googleapis.com/maps/api/js?v=3.exp&' + 'callback=initialize';
+        		document.body.appendChild(script);
+        	}
+        	
+        	window.onload =loadScript;
+        </script>
+    </head>
+</div>
 <body>
 
 <div id="map-canvas"></div>
