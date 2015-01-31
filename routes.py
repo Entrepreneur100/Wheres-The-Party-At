@@ -6,7 +6,7 @@ app = Flask(__name__)
 def home():
 	return render_template ('home.html')
 
-@app.route('/')
+@app.route('/map')
 def themap():
 	return render_template('index.html')
 
