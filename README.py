@@ -1,2 +1,2 @@
 # Wheres-The-Party-At
-Web App
+ print "hello"
