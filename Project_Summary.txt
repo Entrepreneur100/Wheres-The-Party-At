@@ -6,3 +6,10 @@ function that places a party down
 function that searches for users in vicinity of user
 function that indicates the size of a party
 GUI overlay on the google map
+User Inputs:
+	Establishing a Party
+	Turn off locator
+User Outputs:
+	Location
+Things to modify:
+	Represent a population density as a function.
