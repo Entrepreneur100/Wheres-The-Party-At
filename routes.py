@@ -1,6 +1,7 @@
 
 from flask import Flask, render_template, request, abort, jsonify
 from flask.ext.sqlalchemy import SQLAlchemy
+from sys import argv
 import time
 
 app = Flask(__name__)
@@ -54,12 +55,8 @@ def handle_send_location():
 	# print user.latitude
 	# print user.timestamp
 
-	users = db.session.query(User).all()
 
-	for user in users:
-		print "USERRR!"
-
-	abort(401)
+	abort(200)
 
 @app.route('/get_locations')
 def handle_get_locations():
@@ -68,21 +65,26 @@ def handle_get_locations():
 	# format the records you received into list of dictionaries
 	data = []
 
-	# users = db.session.query(User).all()
+	users = db.session.query(User).all()
 
-	# for user in users:
-	# 	print "USER!"
-
-	data.append({
-		'longitude': 8.0,
-		'latitude': 0.9,
+	for user in users:
+		data.append({
+		'longitude': user.longitude,
+		'latitude': user.latitude
 		})
+
+	
 
 	# return the list of dictionaries as json
 	return jsonify(locations=data)
 
+def handle_create_db():
+	db.create_all()	
+	db.session.commit()
+	print "OK"
 
 if __name__ == '__main__':
-    app.run(debug = True)
+	#handle_create_db()
+	app.run(debug = True)
   
   
