@@ -18,6 +18,13 @@
         
         var map;
         var markers = []
+        var redcup = new google.maps.MarkerImage(
+          'http://oi58.tinypic.com/2hpixkx.jpg',
+          new google.maps.Size(225,225),
+          new google.maps.Point(0,0),
+          new google.maps.Point(10,12),
+          new google.maps.Size(20,20)
+        );
 
         function initialize() {
           var mapOptions = {
@@ -83,6 +90,15 @@
           var infowindow = new google.maps.InfoWindow(options);
           map.setCenter(options.position);
         }
+        function setAllMap(map) {
+          for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+          }
+        }
+        function deleteMarkers() {
+          setAllMap(null)
+          markers = [];
+        }
 
 
         function updateLocationsOnMap() {
@@ -97,11 +113,14 @@
             success: function(data) {
               /* This function is called if the request is successful with the data as the parameter.
                  We can now call any javascript functions using this data. */
-              $("body").prepend("The ajax request was succesful! Retrieved JSON: " + JSON.stringify(data) + "<br />");
+               //$("body").prepend("The ajax request was succesful! Retrieved JSON: " + JSON.stringify(data) + "<br />");
                          
 
               // Remove all existing markers from the map.
-              markers = []
+              deleteMarkers();
+
+              
+
               
               //}
               //Add new markers to map by iterating through returned data.
@@ -113,13 +132,17 @@
                    // document.write(" lat= ", latitude," long= ",longitude)
                    myCenter2 =new google.maps.LatLng(latitude,longitude);
                    markers[i] =new google.maps.Marker({
+
                      position:myCenter2,
+                     icon: redcup
                     })
-                    markers[i].setMap(map);    
+                    // markers[i].setMap(map);    
                   }
+                  // Sets the map on all markers in the array.
+                  setAllMap(map);
 
               // Schedule uploadeLocationsOnMap to be run again in 60 seconds using window.setTimeout.
-              window.setTimeout(updateLocationsOnMap, 6000);
+              window.setTimeout(updateLocationsOnMap, 60000);
 
             },
             error: function() {
@@ -131,7 +154,8 @@
               // Remove all existing markers from the map.
               // Alert the user (you can just be ghetto and use alert()).
               // Schedule uploadeLocationsOnMap to run again in 60 seconds using window.setTimeout.
-              window.setTimeout(updateLocationsOnMap, 6000);
+              deleteMarkers();
+              window.setTimeout(updateLocationsOnMap, 60000);
             }
           });
         }
