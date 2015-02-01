@@ -1,10 +1,11 @@
-Components of "where the party at"
-Website interface with the maps api
-Database that stores data info for a user
-Ability to mask idententity
-function that places a party down
-function that searches for users in vicinity of user
-function that indicates the size of a party
+Components of “Where’s The Party At"
+Website interface with Google Maps API
+SQL atabase that stores data info for a user
+Hidden identity
+Function that places a party down
+Function that searches for users in vicinity of user
+Function that indicates the size of a party
+Connect with Facebook and find where your friends are
 GUI overlay on the google map
 User Inputs:
 	Establishing a Party

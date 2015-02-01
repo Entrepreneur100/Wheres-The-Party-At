@@ -24,13 +24,10 @@
           map = new google.maps.Map(document.getElementById('map-canvas'),
               mapOptions);
 
-
           if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
               var pos = new google.maps.LatLng(position.coords.latitude,
                                                position.coords.longitude);
-
-              console.log("####################################")
 
               var result = '';
               var chars = 'abcdefghijklmnopABCDEFGHIJKLMNOP'
@@ -77,10 +74,6 @@
           var infowindow = new google.maps.InfoWindow(options);
           map.setCenter(options.position);
         }
-
-        
-
-
 
         function updateLocationsOnMap() {
           $.ajax({
