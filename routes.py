@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import time
 app = Flask(__name__)
 db = SQLAlchemy(app)
-DATA = []
+
 print "WEBPAGE COMPILED!"
 
 # @app.route('/')
@@ -38,7 +38,6 @@ def handle_send_location():
 	'timestamp' : time.time()
 	}
 
-	DATA.append(data)
 
 	# write the data to the database using sqlite
 	user = User(identity = data['identity'], longitude = data['longitude'], latitude = data['latitude'], timestamp = data['timestamp'])
