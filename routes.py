@@ -48,6 +48,7 @@ def handle_send_location():
 	# write the data to the database using sqlite
 	user = User(identity = data['identity'], longitude = data['longitude'], latitude = data['latitude'], timestamp = data['timestamp'])
 	print user
+	#replace????????????????
 	db.session.add(user)
 	db.session.commit()
 	abort(200)
@@ -60,8 +61,11 @@ def handle_get_locations():
 	data = []
 
 	users = db.session.query(User).all()
+	# Not Filter ????????????????????????
+	#users = db.session.query(User).filter((User.timestamp - time.time()) > 30)
 
 	for user in users:
+		print time.time()
 		data.append({
 		'longitude': user.longitude,
 		'latitude': user.latitude
