@@ -19,7 +19,7 @@
 
         function initialize() {
           var mapOptions = {
-            zoom: 15
+            zoom: 17
           };
           map = new google.maps.Map(document.getElementById('map-canvas'),
               mapOptions);
@@ -32,10 +32,14 @@
 
               console.log("####################################")
 
+              var result = '';
+              var chars = 'abcdefghijklmnopABCDEFGHIJKLMNOP'
+              for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+
               $.ajax({
                 type: "POST",
                 url: "/send_location",
-                data: { 'long': 1, 'lat': 2, 'id' : 'abc', 'timestamp' : 0 }
+                data: { 'latitude' : position.coords.latitude, 'longitude': position.coords.longitude, 'identity' : result , 'timestamp' : 0 }
               })
                 .done(function( msg ) {
                 alert( "Data Saved: " + msg );
@@ -44,7 +48,7 @@
               var infowindow = new google.maps.InfoWindow({
                 map: map,
                 position: pos,
-                content: 'Location found using HTML5.'
+                content: 'TURN UP'
               });
 
               map.setCenter(pos);
