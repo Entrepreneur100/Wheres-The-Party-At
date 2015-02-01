@@ -29,16 +29,17 @@
             navigator.geolocation.getCurrentPosition(function(position) {
               var pos = new google.maps.LatLng(position.coords.latitude,
                                                position.coords.longitude);
-                
 
               console.log("####################################")
 
-              
+              var result = '';
+              var chars = 'abcdefghijklmnopABCDEFGHIJKLMNOP'
+              for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
 
               $.ajax({
                 type: "POST",
                 url: "/send_location",
-                data: { 'latitude' : position.coords.latitude, 'longitude': position.coords.longitude, 'id' : 'abc', 'timestamp' : 0 }
+                data: { 'latitude' : position.coords.latitude, 'longitude': position.coords.longitude, 'identity' : result , 'timestamp' : Date.now() }
               })
                 .done(function( msg ) {
                 alert( "Data Saved: " + msg );
@@ -47,7 +48,7 @@
               var infowindow = new google.maps.InfoWindow({
                 map: map,
                 position: pos,
-                content: 'Turn UP!!'
+                content: 'TURN UP'
               });
 
               map.setCenter(pos);
@@ -121,3 +122,4 @@
     <div id="map-canvas"></div>
   </body>
 </html>
+
