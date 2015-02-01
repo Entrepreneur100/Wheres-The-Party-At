@@ -1,7 +1,8 @@
-{% extends "template.html" %}
-{% block content %}    
-  <div id="map-canvas"></div>
-  <title>Geolocation</title>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Geolocation</title>
+    <div id="map-canvas"></div>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
@@ -28,6 +29,7 @@
           navigator.geolocation.getCurrentPosition(function(position) {
             var pos = new google.maps.LatLng(position.coords.latitude,
                                              position.coords.longitude);
+            
 
             var infowindow = new google.maps.InfoWindow({
               map: map,
@@ -64,7 +66,8 @@
       google.maps.event.addDomListener(window, 'load', initialize);
 
     </script>
-{% endblock %}
-  
-  
-  
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>

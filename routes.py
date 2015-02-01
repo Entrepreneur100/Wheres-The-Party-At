@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 app = Flask(__name__)
 
 
@@ -8,7 +8,14 @@ def home():
 
 @app.route('/map')
 def themap():
-	return render_template('geolocation1.html')
+	return app.send_staticc_file(os.path.join('geolocation1.html', templates))
+
+
+@app.route('/get_locations')
+def get_locations(pos):
+	pass
+
+# @app.route('/send_locations') #look in flask docs for post requests
 
 
 	
