@@ -8,7 +8,7 @@ def home():
 
 @app.route('/map')
 def themap():
-	return index.html
+	return render_template('geolocation1.html')
 
 
 	
