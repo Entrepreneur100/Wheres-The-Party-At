@@ -15,9 +15,9 @@ class User(db.Model):
 
 	__tablename__ = 'users'
 	identity = db.Column(db.String, primary_key = True)
-	longitude = db.Column(db.String, primary_key=True)
-	latitude = db.Column(db.String, primary_key=True)
-	timestamp = db.Column(db.String, primary_key=True)
+	longitude = db.Column(db.Float, primary_key=True)
+	latitude = db.Column(db.Float, primary_key=True)
+	timestamp = db.Column(db.Float, primary_key=True)
 
 	def __init__(self, identity=None, longitude=None, latitude=None, timestamp=None):
 		self.identity = identity
