@@ -1,9 +1,11 @@
 
 from flask import Flask, render_template, request, abort, jsonify
-app = Flask(__name__)
 from flask.ext.sqlalchemy import SQLAlchemy
+import time
+app = Flask(__name__)
 db = SQLAlchemy(app)
 
+print "HI"
 
 # @app.route('/')
 def home():
@@ -33,13 +35,15 @@ def handle_send_location():
 	'identity' : request.form['identity'],
 	'longitude' : request.form['longitude'],
 	'latitude' : request.form['latitude'],
-	'timestamp' : request.form['timestamp']
+	'timestamp' : time.time()
 	}
 
 	# write the data to the database using sqlite
-	user = User(id = request.form['id'], longitude = request.form['long'], latitude = request.form['lat'], timestamp = request.form['timestamp'])
-
-
+	user = User(identity = data['identity'], longitude = data['longitude'], latitude = data['latitude'], timestamp = data['timestamp'])
+	# print user.identity
+	# print user.longitude
+	# print user.latitude
+	# print user.timestamp
 
 	abort(401)
 
