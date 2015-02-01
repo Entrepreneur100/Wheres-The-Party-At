@@ -9,7 +9,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///test.db"
 
 db = SQLAlchemy(app)
 
-print "WEBPAGE COMPILED!"
+print ('WEBPAGE COMPILED!')
 
 # @app.route('/')
 def home():
@@ -47,11 +47,14 @@ def handle_send_location():
 
 	# write the data to the database using sqlite
 	user = User(identity = data['identity'], longitude = data['longitude'], latitude = data['latitude'], timestamp = data['timestamp'])
-	print user
 	#replace????????????????
+	#user_old = db.session.query(User).filter_by(identity = data['identity']).first()
+	# user_old = db.session.query(User).filter_by(True).first()
+	# print ('##############################################', user_old)
+	# db.session.delete(user_old)
+	db.session.query(User).filter(User.identity == data['identity']).delete(synchronize_session = 'False')
 	db.session.add(user)
 	db.session.commit()
-	abort(200)
 
 @app.route('/get_locations')
 def handle_get_locations():
@@ -62,13 +65,14 @@ def handle_get_locations():
 
 	users = db.session.query(User).all()
 	# Not Filter ????????????????????????
-	#users = db.session.query(User).filter((User.timestamp - time.time()) > 30)
+	#users = db.session.query(User).filter_by((timestamp - time.time()) < 30)
 
 	for user in users:
 		print time.time()
 		data.append({
 		'longitude': user.longitude,
-		'latitude': user.latitude
+		'latitude': user.latitude,
+		'ID': user.identity
 		})
 
 	# return the list of dictionaries as json
@@ -77,7 +81,6 @@ def handle_get_locations():
 def handle_create_db():
 	db.create_all()	
 	db.session.commit()
-	print "OK"
 
 if __name__ == '__main__':
 	#handle_create_db()

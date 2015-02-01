@@ -119,7 +119,7 @@
                   }
 
               // Schedule uploadeLocationsOnMap to be run again in 60 seconds using window.setTimeout.
-              window.setTimeout(updateLocationsOnMap, 60000);
+              window.setTimeout(updateLocationsOnMap, 6000);
 
             },
             error: function() {
@@ -131,7 +131,7 @@
               // Remove all existing markers from the map.
               // Alert the user (you can just be ghetto and use alert()).
               // Schedule uploadeLocationsOnMap to run again in 60 seconds using window.setTimeout.
-              window.setTimeout(updateLocationsOnMap, 60000);
+              window.setTimeout(updateLocationsOnMap, 6000);
             }
           });
         }
