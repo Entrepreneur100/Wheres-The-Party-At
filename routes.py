@@ -50,12 +50,6 @@ def handle_send_location():
 	print user
 	db.session.add(user)
 	db.session.commit()
-	# print user.identity
-	# print user.longitude
-	# print user.latitude
-	# print user.timestamp
-
-
 	abort(200)
 
 @app.route('/get_locations')
@@ -72,8 +66,6 @@ def handle_get_locations():
 		'longitude': user.longitude,
 		'latitude': user.latitude
 		})
-
-	
 
 	# return the list of dictionaries as json
 	return jsonify(locations=data)
