@@ -4,8 +4,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import time
 app = Flask(__name__)
 db = SQLAlchemy(app)
-
-print "HI"
+DATA = []
+print "WEBPAGE COMPILED!"
 
 # @app.route('/')
 def home():
@@ -38,6 +38,8 @@ def handle_send_location():
 	'timestamp' : time.time()
 	}
 
+	DATA.append(data)
+
 	# write the data to the database using sqlite
 	user = User(identity = data['identity'], longitude = data['longitude'], latitude = data['latitude'], timestamp = data['timestamp'])
 	# print user.identity
@@ -47,8 +49,8 @@ def handle_send_location():
 
 	abort(401)
 
-@app.route('/get_location')
-def handle_get_location():
+@app.route('/get_locations')
+def handle_get_locations():
   # read the data from the database using sqlite
 
   # format the records you received into list of dictionaries
