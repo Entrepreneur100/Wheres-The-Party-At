@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script
+src="http://maps.googleapis.com/maps/api/js">
+</script>
+
+<script>
+var markers = []
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+
+var reddot = new google.maps.MarkerImage(
+	'http://www.umich.edu/~ece/student_projects/food/media/turnip.gif',
+	new google.maps.Size(54,94),
+	new google.maps.Point(0,0),
+	new google.maps.Point(20,40),
+	new google.maps.Size(30,50)
+	);
+var iconbase = 'https://maps.google.com/mapfiles/kml/shapes/';
+
+
+var myCenter=new google.maps.LatLng(51.508742,-0.120850);
+var myCenter2 = new google.maps.LatLng(51,0);
+function initialize() {
+	var mapProp = {
+	  center:myCenter,
+	  zoom:5,
+	  mapTypeId:google.maps.MapTypeId.ROADMAP
+	  };
+
+	var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+	var longpress = false;
+
+    google.maps.event.addListener(map,'click', function (event) {
+            (longpress) ? alert("Long Press") : alert("Short Press");
+        });
+
+
+
+    google.maps.event.addListener(map, 'mousedown', function(event){
+
+                start = new Date().getTime();           
+            });
+
+    google.maps.event.addListener(map, 'mouseup', function(event){
+
+                end = new Date().getTime();
+                    longpress = (end - start < 500) ? false : true;         
+
+            });
+
+	var marker=new google.maps.Marker({
+	  position:myCenter2,
+	  icon: reddot
+	  });
+
+	marker.setMap(map);
+
+	var marker2=new google.maps.Marker({
+	  position:myCenter2,
+	  map:map
+	  //icon: reddot
+	
+	 });
+	markers = [marker,marker2];
+
+}
+
+google.maps.event.addDomListener(window, 'load', initialize);
+setTimeout(function(){markers.remove(0,-1),5000});
+document.write(markers);
+
+</script>
+</head>
+
+<body>
+<div id="googleMap" style="width:500px;height:380px;"></div>
+</body>
+</html>

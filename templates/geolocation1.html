@@ -19,6 +19,7 @@
         var map;
         var markers = []
         var partyFlags = []
+
         var redcup = new google.maps.MarkerImage(
           'http://oi58.tinypic.com/2hpixkx.jpg',
           new google.maps.Size(225,225),
@@ -27,12 +28,13 @@
           new google.maps.Size(17,17)
         );
         var turnip = new google.maps.MarkerImage(
-  'http://www.umich.edu/~ece/student_projects/food/media/turnip.gif',
-  new google.maps.Size(54,94),
-  new google.maps.Point(0,0),
-  new google.maps.Point(20,40),
-  new google.maps.Size(36,60)
-  );
+          'http://www.umich.edu/~ece/student_projects/food/media/turnip.gif',
+          new google.maps.Size(54,94),
+          new google.maps.Point(0,0),
+          new google.maps.Point(23,58),
+          new google.maps.Size(36,60)
+        );
+
 
         function initialize() {
           var mapOptions = {
@@ -40,11 +42,11 @@
           };
           map = new google.maps.Map(document.getElementById('map-canvas'),
               mapOptions);
+
           if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
               var pos = new google.maps.LatLng(position.coords.latitude,
                                                position.coords.longitude);
-              
               var result = '';
               var chars = 'abcdefghijklmnopABCDEFGHIJKLMNOP123456789'
               for (var i = 8; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
@@ -69,14 +71,28 @@
           } else {
             handleNoGeolocation(false);
           }
-            google.maps.event.addListener(map, 'click', function(event) {
-              startParty(event.latLng);
+            var longpress = false;
+
+            google.maps.event.addListener(map,'click', function (event) {
+                  (longpress) ? startParty(event.latLng) : alert("Hold longer to start a party!");
+              });
+
+            google.maps.event.addListener(map, 'mousedown', function(event){
+              start = new Date().getTime();           
             });
+            google.maps.event.addListener(map, 'mouseup', function(event){
+              end = new Date().getTime();
+              longpress = (end - start < 400) ? false : true;         
+            });
+            // google.maps.event.addListener(map, 'mousedown', function(event) {
+            //   startParty(event.latLng);
+            // });
           
         }
         
         google.maps.event.addDomListener(window, 'load', initialize);
         
+
         function handleNoGeolocation(errorFlag) {
           if (errorFlag) {
             var content = 'Error: The Geolocation service failed.';
@@ -103,15 +119,17 @@
             position:location,
             map:map,
             icon:turnip
+            
           });
           partyFlags.push(partyflag)
         }
-
+        //Sets down all received locations of people from the database
         function setAllMap(map) {
           for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(map);
           }
         }
+        //Deletes all people in the database
         function deleteMarkers() {
           setAllMap(null)
           markers = [];
@@ -128,7 +146,7 @@
             success: function(data) {
               /* This function is called if the request is successful with the data as the parameter.
                  We can now call any javascript functions using this data. */
-              //  $("body").prepend("The ajax request was succesful! Retrieved JSON: " + JSON.stringify(data) + "<br />");
+               $("body").prepend("The ajax request was succesful! Retrieved JSON: " + JSON.stringify(data) + "<br />");
                          
               // Remove all existing markers from the map.
               deleteMarkers();
@@ -147,28 +165,33 @@
                      position:myCenter2,
                      icon: redcup
                     })
-                    // markers[i].setMap(map);    
+                     // markers[i].setMap(map);    
                   }
                   // Sets the map on all markers in the array.
                   setAllMap(map);
+
               // Schedule uploadeLocationsOnMap to be run again in 60 seconds using window.setTimeout.
-              window.setTimeout(updateLocationsOnMap, 6000);
+              window.setTimeout(updateLocationsOnMap, 60000);
+
             },
             error: function() {
               /* This function is called if the request fails for some reason (e.g. server goes down or user loses internet connectivity).
                  You may use this to display an error to your users. */
+
               $("body").prepend("The ajax request failed!<br />");
               // Remove all existing markers from the map.
               // Alert the user (you can just be ghetto and use alert()).
               // Schedule uploadeLocationsOnMap to run again in 60 seconds using window.setTimeout.
               deleteMarkers();
-              window.setTimeout(updateLocationsOnMap, 6000);
+
+              window.setTimeout(updateLocationsOnMap, 60000);
             }
           });
         }
         $(document).ready(function() {
           updateLocationsOnMap(); // Call the function once when the page loads and is ready.
         });
+
       </script>
  </head>
   <body>

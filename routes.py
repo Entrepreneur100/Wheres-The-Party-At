@@ -35,6 +35,10 @@ class User(db.Model):
 def themap():
 	return render_template('geolocation1.html')
 
+@app.route('/start_party')
+def start_party():
+	return render_template('start_party.html')
+
 @app.route('/send_location', methods=['POST'])
 def handle_send_location():
 	data = {
@@ -51,7 +55,7 @@ def handle_send_location():
 	# user_old = db.session.query(User).filter_by(True).first()
 	# print ('##############################################', user_old)
 	# db.session.delete(user_old)
-	db.session.query(User).filter(User.identity == data['identity']).delete(synchronize_session = 'False')
+	db.session.query(User).filter(User.identity == data['identity']).delete(synchronize_session = False)
 	db.session.add(user)
 	db.session.commit()
 
@@ -68,12 +72,13 @@ def handle_get_locations():
 
 	for user in users:
 		# print time.time()
+
 		data.append({
 		'longitude': user.longitude,
 		'latitude': user.latitude,
 		'ID': user.identity
 		})
-		print (data)
+
 
 	# return the list of dictionaries as json
 	return jsonify(locations=data)
@@ -85,3 +90,4 @@ def handle_create_db():
 if __name__ == '__main__':
 	#handle_create_db()
 	app.run(debug = True)
+
