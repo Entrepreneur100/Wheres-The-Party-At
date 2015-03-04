@@ -28,8 +28,29 @@ class User(db.Model):
 		self.latitude = latitude
 		self.timestamp = timestamp
 
+
 	def __repr__(self):
 		return '<USER %r>' % (self.identity)
+
+	#def delete(self, identity, timestamp):
+
+# class Party(db.Model):
+
+# 	__tablename__ = 'Parties'
+# 	identity = db.Column(db.String, primary_key = True)
+# 	name = db.Column(db.String, primary_key = True)
+# 	longitude = db.Column(db.Float, primary_key = True)
+# 	latitude = db.Column(db.Float, primary_key = True)
+# 	#timestamp = db.Column(db.Float, primary_key = True)
+# 	closing_time = db.Column(db.Float,primary_key = True)
+
+# 	def __init__(self, identity, name, longitude, latitude, closing_time):
+# 		self.identity = identity
+# 		self.name = name
+# 		self.longitude = longitude
+# 		self.latitude = latitude
+# 		self.closing_time = closing_time
+
 
 @app.route('/')
 def themap():
@@ -88,6 +109,6 @@ def handle_create_db():
 	db.session.commit()
 
 if __name__ == '__main__':
-	#handle_create_db()
-	app.run(debug = True)
+	handle_create_db()
+	#app.run(debug = True)
 
